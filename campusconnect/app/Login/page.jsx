@@ -1,36 +1,36 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/app/store/redux/authslice/authslice"; // Adjust the path as needed
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/auth/current-user", {
-          credentials: "include", // Ensures cookies are sent
+          credentials: "include",
         });
-
+  
+        console.log("API Response:", response); // Log the response
+  
         if (response.ok) {
           const userData = await response.json();
-          dispatch(setUser(userData)); // Store user in Redux
-          router.push("/events"); // Redirect
+          console.log("User Data:", userData); // Log the parsed data
+          
+          router.push("/events");
         } else {
-          setLoading(false); // Show login page if not authenticated
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error checking authentication:", error);
         setLoading(false);
       }
     };
-
+  
     checkAuth();
-  }, [dispatch, router]);
+  }, [ router]);
 
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:5000/api/auth/google";

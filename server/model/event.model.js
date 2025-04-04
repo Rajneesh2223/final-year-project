@@ -14,6 +14,7 @@ const eventSchema = new mongoose.Schema({
     eventLink: { type: String }, 
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    registeredUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 const Event = mongoose.model("Event", eventSchema);

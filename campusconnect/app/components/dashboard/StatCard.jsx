@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const BACKGROUND_IMAGE = '/image/image.png';
 
-const StatCard = ({ icon: Icon, title, count, color, href, description, clubId }) => {
+const StatCard = ({ Icon, title, count, color, href, description, clubId }) => {
   const colorClasses = {
     blue: 'text-blue-500 bg-blue-50',
     green: 'text-green-500 bg-green-50',
@@ -22,7 +22,7 @@ const StatCard = ({ icon: Icon, title, count, color, href, description, clubId }
 
   return (
     <div className="relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden transform transition hover:scale-105 duration-300 h-full flex flex-col">
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute inset-0 z-0">
         <Image 
           src={BACKGROUND_IMAGE} 
           alt="Card Background" 
@@ -30,7 +30,7 @@ const StatCard = ({ icon: Icon, title, count, color, href, description, clubId }
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="opacity-45 object-cover"
         />
-      </div>
+      </div> */}
     
       <div className="relative z-10 p-6 flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
@@ -68,4 +68,4 @@ const StatCard = ({ icon: Icon, title, count, color, href, description, clubId }
   );
 };
 
-export default StatCard; 
+export default StatCard;

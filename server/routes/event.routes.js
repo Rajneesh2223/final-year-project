@@ -10,4 +10,4 @@ router.get("/club/:clubId",  isAuthenticated, getEventsByClub); // Get events by
 router.put("/:eventId",  isAuthenticated, updateEvent); // Update an event
 router.get("/upcoming/:clubId",  isAuthenticated, getUpcomingEventsByClub);
 
-module.exports = router;
+module.exports = router;    

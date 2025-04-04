@@ -3,14 +3,24 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { Users, Calendar, MapPin, Mail } from 'lucide-react';
+import { useSelector } from 'react-redux';
+
+
 
 export default function ClubDetails() {
   const params = useParams();
   const [club, setClub] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [joining, setJoining] = useState(false); 
+
+  const user = localStorage.getItem("user");  
+  const userData = JSON.parse(user);
+  console.log("userData " , userData);
+  const userId = userData._id;
+
 
   useEffect(() => {
     const fetchClubDetails = async () => {
@@ -62,7 +72,33 @@ export default function ClubDetails() {
       </div>
     );
   }
-
+ const handleJoinClub = async () => {
+   if (!userId) {
+     setError("You must be logged in to join a club.");
+     return;
+   }
+  
+   setJoining(true);
+   try {
+     const response = await fetch(`http://localhost:5000/api/joinClub/clubs/${params.id}/join`, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },  
+       body: JSON.stringify({ userId:userId }),
+     });
+  
+     if (!response.ok) {
+       throw new Error('Failed to join club');
+     }
+  
+   } catch (error) {
+     setError(error.message);
+   } finally {
+     setJoining(false);
+   }
+ };
+  
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -132,16 +168,32 @@ export default function ClubDetails() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
-              <div className="space-y-3">
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
-                  Join Club
-                </button>
-                <button className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-colors">
-                  Contact Club
-                </button>
-              </div>
-            </div>
+  <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
+  <div className="space-y-3">
+    {club.members.includes(userId) ? (  
+      <button
+        disabled
+        className="w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-lg cursor-not-allowed"
+      >
+        Joined the Club
+      </button>
+    ) : (
+      <button
+        onClick={handleJoinClub}
+        disabled={joining}
+        className={`w-full text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ${
+          joining ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+        }`}
+      >
+        {joining ? 'Joining...' : 'Join Club'}
+      </button>
+    )}
+    <button className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 transition-colors">
+      Contact Club
+    </button>
+  </div>
+</div>
+
 
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-bold mb-4">Club Categories</h2>

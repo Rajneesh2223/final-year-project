@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 const ImageSlider = ({ upcomingEvents }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Combine all upcoming events into a single array
   const allEvents = Object.entries(upcomingEvents || {}).reduce((acc, [category, events]) => {
     return [...acc, ...events.map(event => ({
       ...event,

@@ -3,6 +3,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setUser as setReduxUser } from "@/app/store/redux/authslice/authslice";
+
+
 
 const UserProfile = () => {
   const router = useRouter();
@@ -21,6 +26,7 @@ const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -29,15 +35,24 @@ const UserProfile = () => {
         const response = await fetch('http://localhost:5000/api/auth/current-user', {
           credentials: 'include'
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
-        
+
         const data = await response.json();
-        console.log("User data:", data); // Log the full user data
-        
-        setUser(data);
+        console.log("User data:", data);
+
+        try {
+          dispatch(setReduxUser(data)); // Dispatch the Redux action with renamed import
+          toast.success("User data loaded to Redux store");
+          localStorage.setItem("user", JSON.stringify(data));
+          toast.success("User data loaded to local storage");
+        } catch (reduxError) {
+          console.error("Redux dispatch error:", reduxError);
+          toast.error("Failed to update Redux state: " + reduxError.message);
+        }
+        setUser(data); // Update local state
         setFormData({
           bio: data.bio || "",
           department: data.department || "",
@@ -58,7 +73,7 @@ const UserProfile = () => {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -97,6 +112,7 @@ const UserProfile = () => {
 
       const updatedUser = await response.json();
       setUser(updatedUser);
+      dispatch(setReduxUser(updatedUser)); // Update Redux state too
       setIsEditing(false);
       toast.success("Profile updated successfully!");
     } catch (error) {
@@ -116,6 +132,7 @@ const UserProfile = () => {
 
       if (response.ok) {
         setUser(null);
+        dispatch(setReduxUser(null)); // Clear Redux state too
         router.push('/');
         toast.success("Logged out successfully");
       } else {
@@ -131,20 +148,6 @@ const UserProfile = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="flex flex-col justify-center items-center h-screen gap-4">
-        <p className="text-lg font-semibold text-gray-700">Please log in to view your profile</p>
-        <button 
-          onClick={() => router.push('/login')}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-        >
-          Go to Login
-        </button>
       </div>
     );
   }

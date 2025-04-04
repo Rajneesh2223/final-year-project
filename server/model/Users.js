@@ -66,10 +66,12 @@ const userSchema = new mongoose.Schema(
         default: "",
       },
     },
-  },
+    registeredEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    joinedClubs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Club" }],
+  },  
   { timestamps: true }
 );
-
+  
 userSchema.pre("save", function (next) {
   console.log("Saving user:", this.email);
   next();

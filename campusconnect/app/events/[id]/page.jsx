@@ -17,16 +17,24 @@ import {
   Building,
   AlertCircle,
 } from "lucide-react";
-
-const EventDetailsPage = ({ params }) => {
+import EventRegistration from "@/app/components/Registration/EventRegistration";
+import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
+const EventDetailsPage = () => {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const params = useParams();
+  const eventId = params.id;
+
+   const auth = useSelector((state) => state.auth);
+   console.log("auth " , auth.user._id);
+   const userId = auth.user._id;
 
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/events/${params.id}`,{
+        const response = await fetch(`http://localhost:5000/api/events/${eventId}`,{
           credentials: 'include',
         });
         if (!response.ok) {
@@ -101,6 +109,33 @@ const EventDetailsPage = ({ params }) => {
     hour: '2-digit',
     minute: '2-digit'
   });
+
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/events/${eventId}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },  
+        body: JSON.stringify({ userId:userId  }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      console.log('Registration successful:', data);
+      // Handle successful registration (e.g., show a message)
+    } catch (error) {
+      console.error('Registration error:', error);
+      // Handle registration error (e.g., show an error message)
+    }
+  };
+  const handleShare = () => {
+    console.log('Sharing event');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-8">
@@ -194,14 +229,9 @@ const EventDetailsPage = ({ params }) => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-3">
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors">
-                    Register for Event
-                  </button>
-                  <button className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl hover:bg-gray-200 transition-colors">
-                    Share Event
-                  </button>
-                </div>
+                <EventRegistration onRegister={handleRegister} onShare={handleShare} userId={userId} event={event} />
+      {/* <EventActions onRegister={handleRegister} onShare={handleShare} registerText={"Re-register for Event"} /> */}
+    
               </div>
             </div>
           </div>

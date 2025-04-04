@@ -12,7 +12,8 @@ const ClubSchema = new mongoose.Schema({
     isFeatured: { type: Boolean, default: false },
     image: { type: String },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],   
 }, { timestamps: true });
 
 const Club = mongoose.model("Club", ClubSchema);

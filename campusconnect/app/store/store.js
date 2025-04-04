@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./redux/authslice/authslice";
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './redux/authslice/authslice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
   },
+  // Redux Toolkit includes redux-thunk by default
 });
-
-export default store;

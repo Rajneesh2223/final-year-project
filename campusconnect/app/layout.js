@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/component/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
-import store from "@/app/store/store";
+import { store } from "@/app/store/store";
 import { Provider } from "react-redux";
 import { useRouter } from "next/navigation";  // Import useRouter
 
@@ -29,6 +29,7 @@ export default function RootLayout({ children }) {
             {showNavbar && (
               <aside className="w-64 bg-white border-r border-gray-200 fixed h-screen">
                 <Navbar />
+
               </aside>
             )}
             <main className={`${showNavbar ? "ml-64" : ""} flex-1 p-4`}>

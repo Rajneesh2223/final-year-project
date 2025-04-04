@@ -15,14 +15,18 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+
 const ClubsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('popular');
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); 
 
+  
+
+  
   useEffect(() => {
     const fetchClubs = async () => {
       try {

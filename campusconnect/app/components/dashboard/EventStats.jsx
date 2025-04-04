@@ -6,7 +6,7 @@ import { Trophy, Music, Code } from 'lucide-react';
 const EventStats = ({ eventCounts, isLoading }) => {
   const STAT_CARDS = [
     {
-      icon: <Trophy className="h-6 w-6" />,
+      icon: Trophy, // Pass the component itself, not JSX
       title: "Sports Events",
       count: eventCounts.sports || 0,
       color: "blue",
@@ -15,7 +15,7 @@ const EventStats = ({ eventCounts, isLoading }) => {
       clubId: "sports"
     },
     {
-      icon: <Music className="h-6 w-6" />,
+      icon: Music, // Pass the component itself
       title: "Cultural Events",
       count: eventCounts.cultural || 0,
       color: "green",
@@ -24,7 +24,7 @@ const EventStats = ({ eventCounts, isLoading }) => {
       clubId: "cultural"
     },
     {
-      icon: <Code className="h-6 w-6" />,
+      icon: Code, // Pass the component itself
       title: "Technical Events",
       count: eventCounts.technical || 0,
       color: "purple",
@@ -39,7 +39,7 @@ const EventStats = ({ eventCounts, isLoading }) => {
       {STAT_CARDS.map((card, index) => (
         <StatCard
           key={index}
-          icon={card.icon}
+          Icon={card.icon} // Changed prop name to uppercase Icon
           title={card.title}
           count={card.count}
           color={card.color}
@@ -53,4 +53,4 @@ const EventStats = ({ eventCounts, isLoading }) => {
   );
 };
 
-export default EventStats; 
+export default EventStats;
