@@ -18,6 +18,7 @@ const clubRoutes = require("./routes/club.routes");
 const eventRoutes = require("./routes/event.routes");
 const registrationRoutes = require("./routes/registration.routes");
 const joinClubRoutes = require("./routes/joinClub.routes");
+
 const app = express();
 
 // Connect to MongoDB
@@ -87,6 +88,7 @@ app.use("/api/clubs",  clubRoutes);
 app.use("/api/events",  eventRoutes);
 app.use('/api', registrationRoutes);
 app.use('/api/joinClub', joinClubRoutes);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -3,10 +3,12 @@ const { getAllClubs, getClubById, createClub, updateClub, deleteClub } = require
 const { isAuthenticated } = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/", isAuthenticated,getAllClubs);  // Fetch all clubs
-router.get("/:id", isAuthenticated, getClubById);  // Get a single club by ID
-router.post("/", isAuthenticated, createClub);  // Create a new club
-router.put("/:id", isAuthenticated, updateClub);  // Update a club
-router.delete("/:id", isAuthenticated, deleteClub);  // Delete a club
+router.get("/", isAuthenticated,getAllClubs);  
+router.get("/:id", isAuthenticated, getClubById);  
+router.post("/", isAuthenticated, createClub);  
+router.put("/:id", isAuthenticated, updateClub);  
+router.delete("/:id", isAuthenticated, deleteClub);  
+
+
 
 module.exports = router;

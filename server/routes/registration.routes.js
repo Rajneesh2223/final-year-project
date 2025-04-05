@@ -11,4 +11,6 @@ router.get('/users/:userId/events',getUserEvents);
 // Get users registered for an event
 router.get('/events/:eventId/registrations',getEventRegistrations);
 
+// Get all registrations
+
 module.exports = router;

@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const { ROLES } = require("../constants");
+
+// IMPORTANT: Add this line to define adminEmails
+const adminEmails = ['rajneeshkumar6267@gmail.com' , "kg7460502@gmail.com"];
 
 const userSchema = new mongoose.Schema(
   {
@@ -11,8 +15,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/@ietlucknow.ac.in$/, "Only IET Lucknow email addresses are allowed"],
+      validate: {
+        validator: function(email) {
+          return adminEmails.includes(email) || email.endsWith('@ietlucknow.ac.in');
+        },
+        message: props => 'Only authorized email addresses are allowed'
+      }
     },
+    
     name: {
       type: String,
       required: true,
@@ -32,10 +42,15 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["student", "faculty", "admin"],
-      default: "student",
+      enum: [ROLES.STUDENT, ROLES.FACULTY, ROLES.ADMIN],
+      default: function() {
+        // Set role based on email
+        if (adminEmails.includes(this.email)) {
+          return ROLES.ADMIN;
+        }
+        return ROLES.STUDENT; // Default role
+      }
     },
-
     bio: {
       type: String,
       default: "",

@@ -9,6 +9,7 @@ import EventStats from './EventStats';
 import SupportResources from './SupportResources';
 import UpcomingEventsList from './UpcomingEventsList';
 import { useSelector } from 'react-redux';
+import ClubHeadsSection from '../clubHeadSection/ClubHeadsSection';
 
 const BACKGROUND_IMAGE = '/image/image.png';
 
@@ -132,8 +133,11 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className='mt-4'>
             <ImageSlider upcomingEvents={upcomingEvents} />
+          </div>
+          <div className='my-4'>
+          <ClubHeadsSection/>
           </div>
 
          
