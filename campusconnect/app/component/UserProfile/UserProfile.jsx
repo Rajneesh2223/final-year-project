@@ -1,11 +1,10 @@
 "use client";
+import { setUser as setReduxUser } from "@/app/store/redux/authslice/authslice";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setUser as setReduxUser } from "@/app/store/redux/authslice/authslice";
 
 
 
@@ -338,7 +337,7 @@ const UserProfile = () => {
               </div>
             )}
 
-            <div className="mt-8 pt-6 border-t border-gray-200 flex justify-center">
+            {/* <div className="mt-8 pt-6 border-t border-gray-200 flex justify-center">
               <button
                 className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center"
                 onClick={handleLogout}
@@ -348,7 +347,7 @@ const UserProfile = () => {
                 </svg>
                 Logout
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
