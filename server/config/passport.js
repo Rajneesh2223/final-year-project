@@ -31,7 +31,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // List of admin emails
-const adminEmails = ['rajneeshkumar6267@gmail.com' , "kg7460502@gmail.com" , ];
+const adminEmails = ['rajneeshkumar6267@gmail.com' , "kg7460502@gmail.com" , "akashparashar1712@gmail.com" ];
 
 passport.use(new GoogleStrategy(
   {

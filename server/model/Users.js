@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ROLES } = require("../constants");
 
 // IMPORTANT: Add this line to define adminEmails
-const adminEmails = ['rajneeshkumar6267@gmail.com' , "kg7460502@gmail.com"];
+const adminEmails = ['rajneeshkumar6267@gmail.com' , "kg7460502@gmail.com" ,"akashparashar1712@gmail.com"];
 
 const userSchema = new mongoose.Schema(
   {
