@@ -1,5 +1,5 @@
 "use client";
-import { Check, ChevronDown, ChevronUp, Clock, Info, Shield, Star, X } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Clock, Info, Shield, Star, User, X } from "lucide-react";
 import { useState } from "react";
 
 const ClubApprovalRequest = ({ onApprove, onReject }) => {
@@ -112,7 +112,7 @@ const ClubApprovalRequest = ({ onApprove, onReject }) => {
     <div className="w-full">
       <div className="bg-white rounded-lg shadow-sm border">
         <div className="p-4 border-b bg-gray-50">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
+          <h2 className="text-lg font-semibold flex items-center gap-2 text-black">
             <Clock className="h-5 w-5 text-amber-500" />
             Pending Club Approval Requests
             <span className="ml-2 px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-medium rounded-full">
@@ -135,7 +135,7 @@ const ClubApprovalRequest = ({ onApprove, onReject }) => {
                 >
                   <div className="flex-grow">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-medium">{request.clubName}</h3>
+                      <h3 className="font-medium text-black">{request.clubName}</h3>
                       <span className="px-2 py-0.5 bg-amber-100 text-amber-800 text-xs rounded-full flex items-center gap-1">
                         <Clock className="h-3 w-3" /> Pending
                       </span>

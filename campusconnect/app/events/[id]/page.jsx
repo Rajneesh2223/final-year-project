@@ -1,36 +1,26 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import EventRegistration from "@/app/components/Registration/EventRegistration";
 import {
-  CalendarDays,
-  MapPin,
-  Tag,
-  Users,
+  AlertCircle,
   ArrowLeft,
-  Loader2,
-  Building2,
-  User,
-  Clock,
   BadgeCheck,
   Calendar,
-  Users2,
-  Building,
-  AlertCircle,
+  Loader2,
+  MapPin,
+  User
 } from "lucide-react";
-import EventRegistration from "@/app/components/Registration/EventRegistration";
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 const EventDetailsPage = () => {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
   const eventId = params.id;
-
-   const auth = useSelector((state) => state.auth);
-   console.log("auth " , auth.user._id);
-   const userId = auth.user._id;
-
+  const user = localStorage.getItem("user");  
+  const userData = JSON.parse(user);
+  const userId = userData._id
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
@@ -117,22 +107,30 @@ const EventDetailsPage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },  
-        body: JSON.stringify({ userId:userId  }),
+        },
+        body: JSON.stringify({ userId: userId }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Registration failed');
       }
-
+  
       const data = await response.json();
+      
       console.log('Registration successful:', data);
-      // Handle successful registration (e.g., show a message)
+  
+      // ✅ Update local state to reflect registration
+      setEvent(prev => ({
+        ...prev,
+        registeredUsers: [...(prev.registeredUsers || []), userId],
+        attendeesCount: (prev.attendeesCount || 0) + 1
+      }));
+  
     } catch (error) {
       console.error('Registration error:', error);
-      // Handle registration error (e.g., show an error message)
     }
   };
+  
   const handleShare = () => {
     console.log('Sharing event');
   };

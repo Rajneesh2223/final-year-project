@@ -37,7 +37,7 @@ const googleCallback = (req, res, next) => {
         
         // Redirect based on role
         const redirectUrl = user.role === ROLES.ADMIN 
-          ? 'http://localhost:3000/admin/dashboard' 
+          ? 'http://localhost:3000/admin' 
           : 'http://localhost:3000/dashboard';
         
         return res.redirect(redirectUrl);

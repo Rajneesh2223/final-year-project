@@ -117,7 +117,7 @@ const AdminUserPanel = () => {
             <div key={club.name} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <div 
                 onClick={() => openClubModal(club)}
-                className="p-4 bg-gray-50 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
+                className="p-4 bg-gray-50  text-black flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
               >
                 <div>
                   <h2 className="text-lg font-semibold text-black">{club.name}</h2>
@@ -161,8 +161,8 @@ const AdminUserPanel = () => {
       {showModal && selectedClub && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-screen overflow-hidden flex flex-col">
-            <div className="p-4 bg-gray-50 border-b flex justify-between items-center sticky top-0">
-              <h2 className="text-xl font-bold flex items-center gap-2">
+            <div className="p-4 bg-gray-50  text-black border-b flex justify-between items-center sticky top-0">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-black">
                 {selectedClub.name}
                 <span className="text-sm font-normal text-gray-500">
                   ({selectedClub.members.length} Member{selectedClub.members.length !== 1 ? 's' : ''})
@@ -189,7 +189,7 @@ const AdminUserPanel = () => {
                 <tbody className="divide-y">
                   {selectedClub.members.map((member, index) => (
                     <tr key={index} className="hover:bg-gray-50 group">
-                      <td className="py-4 pl-2 font-medium">{member.name}</td>
+                      <td className="py-4 pl-2 font-medium text-black">{member.name}</td>
                       <td className="py-4 text-sm text-gray-600">
                         <div className="flex items-center gap-2">
                           <Mail className="h-4 w-4 text-gray-400" />
@@ -221,7 +221,7 @@ const AdminUserPanel = () => {
             <div className="p-4 border-t bg-gray-50 flex justify-end sticky bottom-0">
               <button 
                 onClick={closeModal}
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors text-red-300 bg-red-500/10"
               >
                 Close
               </button>

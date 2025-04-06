@@ -167,7 +167,9 @@ const Navbar = () => {
                 )}
               </div>
               <div>
-                <p className="font-medium text-sm">{user.name}</p>
+              <p className={`font-medium text-sm  ${user.role === "admin" ? "bg-red-500/10 text-red-700" : "bg-blue-500/10 text-blue-500 font-semibold"} p-2 rounded-md`}>
+  {user.name}
+</p>
                 <p className="text-xs text-gray-500 capitalize">
                   {user.role} {user.role === 'admin' && '⭐'}
                 </p>

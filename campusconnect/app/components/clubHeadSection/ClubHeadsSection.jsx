@@ -1,8 +1,8 @@
 // components/ClubHeadsSection.jsx
-import { Users, Crown, Mail, UserPlus, ChevronsUp, User, Plus, BarChart2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { BarChart2, Crown, Mail, Plus, Users } from 'lucide-react';
 import Image from 'next/image';
-import clubHead from '../../../public/clubHead/clubHead.png'
+import { useEffect, useState } from 'react';
+import clubHead from '../../../public/clubHead/clubHead.png';
 
 const ClubHeadsSection = ({ isAdmin }) => {
   const [clubData, setClubData] = useState([]);
@@ -128,7 +128,7 @@ const ClubHeadsSection = ({ isAdmin }) => {
             <select 
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-gray-100 border-0 rounded-md px-3 py-1 text-sm"
+              className="bg-gray-200 border-0 rounded-md px-3 py-1 text-sm text-black  "
             >
               <option value="members">Members</option>
               <option value="heads">Heads</option>
@@ -206,7 +206,7 @@ const ClubHeadsSection = ({ isAdmin }) => {
               </div>
               
               <div className="p-5">
-                <h3 className="font-bold text-lg mb-1">{club.club}</h3>
+                <h3 className="font-bold text-lg mb-1 text-black">{club.club}</h3>
                 <p className="text-gray-600 text-sm mb-3">Led by {club.name}</p>
                 
                 {/* <div className="grid grid-cols-2 gap-4 mb-4">

@@ -1,15 +1,14 @@
 "use client"
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Bell } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Bell, Calendar, Book, Users, Award, BarChart2, Clipboard, MessageCircle } from 'lucide-react';
-import ImageSlider from './ImageSlider';
+import { useEffect, useState } from 'react';
+import ClubHeadsSection from '../clubHeadSection/ClubHeadsSection';
 import EventStats from './EventStats';
+import ImageSlider from './ImageSlider';
 import SupportResources from './SupportResources';
 import UpcomingEventsList from './UpcomingEventsList';
-import { useSelector } from 'react-redux';
-import ClubHeadsSection from '../clubHeadSection/ClubHeadsSection';
 
 const BACKGROUND_IMAGE = '/image/image.png';
 
@@ -19,7 +18,8 @@ const DashboardPage = () => {
   const [upcomingEvents, setUpcomingEvents] = useState({ sports: [], cultural: [], technical: [] });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const user = useSelector((state) => state.auth.user);
+  const user = localStorage.getItem("user");  
+  const userData = JSON.parse(user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,15 +73,7 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  const navItems = [
-    { icon: <Calendar className="w-5 h-5" />, label: "Calendar", href: "/calendar" },
-    { icon: <Book className="w-5 h-5" />, label: "Courses", href: "/courses" },
-    { icon: <Users className="w-5 h-5" />, label: "Clubs", href: "/clubs" },
-    { icon: <Award className="w-5 h-5" />, label: "Events", href: "/events" },
-    { icon: <BarChart2 className="w-5 h-5" />, label: "Grades", href: "/grades" },
-    { icon: <Clipboard className="w-5 h-5" />, label: "Resources", href: "/resources" },
-    { icon: <MessageCircle className="w-5 h-5" />, label: "Forums", href: "/forums" },
-  ];
+  
 
   if (error) {
     return (
@@ -137,13 +129,14 @@ const DashboardPage = () => {
             <ImageSlider upcomingEvents={upcomingEvents} />
           </div>
           <div className='my-4'>
-          <ClubHeadsSection/>
-          </div>
+      {(userData?.role === 'admin' || userData?.role === 'clubhead') && (
+        <ClubHeadsSection />
+      )}
+    </div>
 
          
-          {/* Content areas */}
+         
           <div className="grid grid-cols-2 lg:grid-cols-2 gap-6">
-            {/* Event stats panel */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-4 h-full">
                 <h2 className="text-lg font-semibold mb-4 text-gray-800">Event Statistics</h2>
@@ -151,7 +144,6 @@ const DashboardPage = () => {
               </div>
             </div>
             
-            {/* Upcoming events panel */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-4 h-full">
                 <h2 className="text-lg font-semibold mb-4 text-gray-800">Upcoming Events</h2>
@@ -160,12 +152,10 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          {/* Additional content area for future components */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
             <div className="bg-white rounded-lg shadow-sm p-4">
               <h2 className="text-lg font-semibold mb-4 text-gray-800">Academic Calendar</h2>
               <div className="border rounded p-4 text-center text-gray-500 min-h-32">
-                {/* Placeholder for Academic Calendar component */}
                 <p>Academic calendar information will appear here</p>
               </div>
             </div>
@@ -176,7 +166,6 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          {/* College news/announcements section */}
           <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">Campus Announcements</h2>
             <div className="space-y-4">
@@ -193,7 +182,6 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 py-4">
             <p>© {new Date().getFullYear()} College Management System. All rights reserved.</p>
           </footer>

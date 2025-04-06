@@ -1,5 +1,4 @@
 // EventActions.jsx
-import React from 'react';
 
 const EventRegistration = ({ 
   onRegister, 
@@ -21,6 +20,7 @@ const EventRegistration = ({
             : "bg-blue-600 text-white hover:bg-blue-700"
         }`}
         onClick={onRegister}
+        disabled={isRegistered}
       >
         {isRegistered ? registeredText : registerText}
       </button>
