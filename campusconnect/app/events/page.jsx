@@ -1,18 +1,19 @@
   // eslint-disable-next-line
   "use client";
-  import React, { useState, useEffect } from "react";
-  import Link from "next/link";
   import {
-    CalendarDays,
-    MapPin,
-    Search,
-    Filter,
-    Star,
-    Users,
-    Plus,
-    X,
-    Tag,
-  } from "lucide-react";
+  CalendarDays,
+  Filter,
+  MapPin,
+  Plus,
+  Search,
+  Star,
+  Tag,
+  Users,
+  X,
+} from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 
   const EventsPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -37,7 +38,8 @@
       department: "",
       popularity: "",
     });
-
+      const [userRole , setUserRole] = useState(null)
+      console.log(userRole,"userRole")
     // Get club category from URL query parameter
     useEffect(() => {
       const params = new URLSearchParams(window.location.search);
@@ -65,6 +67,7 @@
           setEvents(data);
           setFilteredEvents(data);
           setIsLoading(false);
+         
         } catch (err) {
           setError(err.message);
           setIsLoading(false);
@@ -211,13 +214,16 @@
             <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
               Campus Events Hub
             </h1>
-            <Link
-              href="/create-event"
-              className="flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              <Plus className="mr-2 h-5 w-5" />
-              Create Event
-            </Link>
+            {(userRole === "admin" || userRole === "clubhead") && (
+  <Link
+    href="/create-event"
+    className="flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+  >
+    <Plus className="mr-2 h-5 w-5" />
+    Create Event
+  </Link>
+)}
+
           </div>
 
           {/* Search and Filters */}

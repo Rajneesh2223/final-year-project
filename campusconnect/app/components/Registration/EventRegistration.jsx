@@ -1,14 +1,13 @@
-// EventActions.jsx
-
 const EventRegistration = ({ 
   onRegister, 
   onShare, 
+  onDelete,       // 🆕 Add delete handler
   userId,
   event,
+  isAdmin,         // 🆕 Add admin check
   registerText = "Register for Event",
   registeredText = "Registered ✓"
 }) => {
-  // Check if this user is already registered for this event
   const isRegistered = event.registeredUsers && event.registeredUsers.includes(userId);
   
   return (
@@ -24,14 +23,22 @@ const EventRegistration = ({
       >
         {isRegistered ? registeredText : registerText}
       </button>
+
       <button
         className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl hover:bg-gray-200 transition-colors"
         onClick={onShare}
       >
         Share Event
       </button>
+
+      {isAdmin && (
+        <button
+          className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition-colors"
+          onClick={onDelete}
+        >
+          Delete Event
+        </button>
+      )}
     </div>
   );
 };
-
-export default EventRegistration;

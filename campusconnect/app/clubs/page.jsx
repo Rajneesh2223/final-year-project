@@ -1,19 +1,17 @@
 "use client"
-import React, { useState, useEffect } from 'react';
-import { 
-  Users, 
-  Search, 
-  Plus, 
-  BookOpen, 
-  Globe, 
-  Star,
+import {
+  BookOpen,
   Calendar,
+  CheckCircle2,
+  Globe,
   MapPin,
-  Clock,
-  ChevronDown,
+  Plus,
+  Search,
+  Star,
   TrendingUp,
-  CheckCircle2
+  Users
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 
 const ClubsPage = () => {
@@ -23,21 +21,23 @@ const ClubsPage = () => {
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); 
-
-  
-
-  
+  const [role, setRole] = useState('');
   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setRole(parsedUser.role);
+    }
+
     const fetchClubs = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/clubs',{
+        const response = await fetch('http://localhost:5000/api/clubs', {
           credentials: 'include',
         });
         if (!response.ok) {
           throw new Error('Failed to fetch clubs');
         }
         const data = await response.json();
-        // Transform the data to match our UI requirements
         const transformedClubs = data.map(club => ({
           ...club,
           id: club._id,
@@ -113,13 +113,17 @@ const ClubsPage = () => {
             </h1>
             <p className="text-gray-600 mt-2">Discover and join exciting student organizations</p>
           </div>
-          <a 
-            href="/clubs/create" 
-            className="flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-          >
-            <Plus className="mr-2 h-5 w-5" />
-            Create Club
-          </a>
+     
+          {role === 'admin' && (
+  <a 
+    href="/clubs/create" 
+    className="flex items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+  >
+    <Plus className="mr-2 h-5 w-5" />
+    Create Club
+  </a>
+)}
+
         </div>
 
         {/* Search and Filters */}

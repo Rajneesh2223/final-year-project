@@ -61,7 +61,7 @@ const Navbar = () => {
       });
       localStorage.removeItem('user');
       setUser(null);
-      router.push('/login');
+      router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);
     }
